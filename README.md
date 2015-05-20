@@ -2,9 +2,9 @@
 This is the testbed for gm_voxelate, a configurable voxel module for Garrysmod.
 
 ##Voxelate Pre-Release
-Currently this repo also serves as the pre-release for gm_voxelate. Only windows binaries are available at the moment.
+Currently this repo also houses the pre-release for gm_voxelate. Only windows binaries are available at the moment.
 
-See the Facepunch Thread for more information.
+See the [Facepunch Thread](http://facepunch.com/showthread.php?t=1466364) for more information.
 
 ##Installation
 
