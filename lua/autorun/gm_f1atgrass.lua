@@ -1,5 +1,10 @@
 if game.GetMap()!="gm_f1atgrass" then return end
 
+if SERVER then
+	AddCSLuaFile()
+	resource.AddFile("materials/voxel_test_atlas.vmt")
+end
+
 if !VOXL then
 	require("voxelate")
 
