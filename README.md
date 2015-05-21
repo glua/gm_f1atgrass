@@ -17,7 +17,7 @@ See the [Facepunch Thread](http://facepunch.com/showthread.php?t=1466364) for mo
 Start gmod and run the gm_f1atgrass map. You will spawn with the VOXGUN, which can be used to place and remove blocks like you can in minecraft. Currently there is no way to select a different block type to place.
 
 ##Documentation
-Look in the repo's docs directory.
+Check the repo's wiki. (Thanks, Zerf!)
 
 ##Bugs
 Please report bugs and other problems on the repo's issues page.
