@@ -64,10 +64,8 @@ if SERVER then
 	hook.Add("PlayerSpawn","voxl_playerspawn",function(ply)
 		ply:SetPos(Vector(0,0,2200))
 		ply:Give("f1atgrass_gun")
-		ply:Give("f1atgrass_gun_cubes")
-		ply:Give("f1atgrass_gun_balls")
-		ply:Give("f1atgrass_gun_cubes_adv")
-		ply:Give("f1atgrass_gun_balls_adv")
+		ply:Give("f1atgrass_gun_bulk")
+		ply:Give("f1atgrass_gun_adv")
 		timer.Simple(0,function()
 			if !IsValid(ply) then return end
 			ply:SetJumpPower(250)
@@ -81,7 +79,6 @@ if SERVER then
 else
 	hook.Add("Initialize","voxl_init",function()
 		CreateClientConVar("voxl_brush_mat",5, false, true)
-		CreateClientConVar("voxl_brush_size",100, false, true)
 
 		local combo = g_ContextMenu:Add("DComboBox")
 		combo:SetPos(20,130)
@@ -126,24 +123,12 @@ else
 		combo.OnSelect = function(self,index,value,data)
 			RunConsoleCommand("voxl_brush_mat",data)
 		end
+	end)
 
-		local combo2 = g_ContextMenu:Add("DComboBox")
-		combo2:SetPos(20,160)
-		combo2:SetWide(200)
-
-		combo2:AddChoice(100,nil,true)
-		combo2:AddChoice(200)
-		combo2:AddChoice(300)
-		combo2:AddChoice(400)
-		combo2:AddChoice(500)
-		combo2:AddChoice(600)
-		combo2:AddChoice(700)
-		combo2:AddChoice(800)
-		combo2:AddChoice(900)
-		combo2:AddChoice(1000)
-
-		combo2.OnSelect = function(self,index,value,data)
-			RunConsoleCommand("voxl_brush_size",value)
+	hook.Add("PostDrawOpaqueRenderables","voxl_drawhelpers",function()
+		local w = LocalPlayer():GetActiveWeapon()
+		if IsValid(w) and w.VoxlDraw then
+			w:VoxlDraw()
 		end
 	end)
 end
