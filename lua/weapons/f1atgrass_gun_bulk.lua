@@ -18,6 +18,10 @@ function SWEP:Initialize()
 end
 
 function SWEP:PrimaryAttack()
+	if not IsFirstTimePredicted() then return end
+
+	if !self.Owner:KeyDown(IN_RELOAD) then self:EmitSound( "ambient/explosions/explode_1.wav" ) end
+
 	if SERVER then
 		local b = self:GetBrushSize()
 		if self.Owner:KeyDown(IN_RELOAD) then
@@ -25,7 +29,6 @@ function SWEP:PrimaryAttack()
 			return
 		end
 
-		self:EmitSound( "ambient/explosions/explode_1.wav" )
 		local tr = self.Owner:GetEyeTrace()
 		if b>0 then
 			local off = Vector(b,b,b)
@@ -39,6 +42,10 @@ function SWEP:PrimaryAttack()
 end
 
 function SWEP:SecondaryAttack()
+	if not IsFirstTimePredicted() then return end
+
+	if !self.Owner:KeyDown(IN_RELOAD) then self:EmitSound( "npc/env_headcrabcanister/explosion.wav" ) end
+
 	if SERVER then
 		local b = self:GetBrushSize()
 		if self.Owner:KeyDown(IN_RELOAD) then
@@ -46,7 +53,6 @@ function SWEP:SecondaryAttack()
 			return
 		end
 
-		self:EmitSound( "npc/env_headcrabcanister/explosion.wav" )
 		local tr = self.Owner:GetEyeTrace()
 		if b>0 then
 			local off = Vector(b,b,b)
@@ -55,6 +61,7 @@ function SWEP:SecondaryAttack()
 			VOXL:setSphereAt(tr.HitPos,math.abs(b),self.Owner:GetInfoNum("voxl_brush_mat",5))
 		end
 	end
+
 	self:SetNextSecondaryFire(CurTime()+1)
 end
 
@@ -64,7 +71,6 @@ function SWEP:VoxlDraw()
 	local b = self:GetBrushSize()
 	local tr = self.Owner:GetEyeTrace()
 	render.SetMaterial(mat)
-	render.PushCustomClipPlane(tr.HitNormal,tr.HitNormal:Dot(tr.HitPos))
 
 	if b>0 then
 		local off = Vector(b,b,b)
@@ -72,6 +78,4 @@ function SWEP:VoxlDraw()
 	else
 		render.DrawSphere(tr.HitPos,math.abs(b),10,10)
 	end
-
-	render.PopCustomClipPlane()
 end

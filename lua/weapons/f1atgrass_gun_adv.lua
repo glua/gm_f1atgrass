@@ -10,8 +10,9 @@ SWEP.Primary.Automatic = true
 SWEP.Secondary.Automatic = true
 
 function SWEP:Initialize()
+	self.next_reload=0
+
 	if SERVER then
-		self.next_reload=0
 		self.point_selected = false
 	end
 end
@@ -22,8 +23,11 @@ function SWEP:SetupDataTables()
 end
 
 function SWEP:PrimaryAttack()
+	if not IsFirstTimePredicted() then return end
+
+	self:EmitSound( "ambient/machines/teleport1.wav" )
+
 	if SERVER then
-		self:EmitSound( "ambient/machines/teleport1.wav" )
 		local tr = self.Owner:GetEyeTrace()
 		VOXL:setRegionAt(self:GetP1(),self:GetP2(),0)
 	end
@@ -32,8 +36,11 @@ function SWEP:PrimaryAttack()
 end
 
 function SWEP:SecondaryAttack()
+	if not IsFirstTimePredicted() then return end
+
+	self:EmitSound( "ambient/machines/teleport1.wav" )
+
 	if SERVER then
-		self:EmitSound( "ambient/machines/teleport1.wav" )
 		local tr = self.Owner:GetEyeTrace()
 		VOXL:setRegionAt(self:GetP1(),self:GetP2(),self.Owner:GetInfoNum("voxl_brush_mat",5))
 	end
@@ -41,17 +48,23 @@ function SWEP:SecondaryAttack()
 end
 
 function SWEP:Reload()
-	if SERVER and CurTime()>self.next_reload then
-		self:EmitSound( "buttons/button15.wav" )
-		local tr = self.Owner:GetEyeTrace()
+	if not IsFirstTimePredicted() then return end
 
-		if self.point_selected then
-			self:SetP1(tr.HitPos+tr.HitNormal*20)
-		else
-			self:SetP2(tr.HitPos+tr.HitNormal*20)
+	if CurTime()>self.next_reload then
+		self:EmitSound( "buttons/button15.wav" )
+
+		if SERVER then
+			local tr = self.Owner:GetEyeTrace()
+
+			if self.point_selected then
+				self:SetP1(tr.HitPos+tr.HitNormal*20)
+			else
+				self:SetP2(tr.HitPos+tr.HitNormal*20)
+			end
+
+			self.point_selected= !self.point_selected
 		end
 
-		self.point_selected= !self.point_selected
 		self.next_reload=CurTime()+1
 	end
 end

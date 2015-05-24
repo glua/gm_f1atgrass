@@ -1,3 +1,5 @@
+if false then return end
+
 if game.GetMap()!="gm_f1atgrass" then return end
 
 if SERVER then
@@ -62,7 +64,7 @@ end
 if SERVER then
 
 	hook.Add("PlayerSpawn","voxl_playerspawn",function(ply)
-		ply:SetPos(Vector(0,0,2200))
+		ply:SetPos(Vector(math.random(-190,190),math.random(-120,120),2104))
 		ply:Give("f1atgrass_gun")
 		ply:Give("f1atgrass_gun_bulk")
 		ply:Give("f1atgrass_gun_adv")

@@ -10,8 +10,11 @@ SWEP.Primary.Automatic = true
 SWEP.Secondary.Automatic = true
 
 function SWEP:PrimaryAttack()
+	if not IsFirstTimePredicted() then return end
+
+	self:EmitSound( "physics/concrete/concrete_impact_soft1.wav" )
+
 	if SERVER then
-		self:EmitSound( "physics/concrete/concrete_impact_soft1.wav" )
 		local tr = self.Owner:GetEyeTrace()
 		VOXL:setAt(tr.HitPos-tr.HitNormal,0)
 	end
@@ -20,8 +23,11 @@ function SWEP:PrimaryAttack()
 end
 
 function SWEP:SecondaryAttack()
+	if not IsFirstTimePredicted() then return end
+
+	self:EmitSound( "physics/concrete/concrete_block_impact_hard1.wav" )
+	
 	if SERVER then
-		self:EmitSound( "physics/concrete/concrete_block_impact_hard1.wav" )
 		local tr = self.Owner:GetEyeTrace()
 		VOXL:setAt(tr.HitPos+tr.HitNormal,self.Owner:GetInfoNum("voxl_brush_mat",5))
 	end
