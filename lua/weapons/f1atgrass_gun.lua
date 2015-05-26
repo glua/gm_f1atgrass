@@ -3,7 +3,7 @@ AddCSLuaFile()
 SWEP.PrintName = "VOXGUN"
 
 SWEP.UseHands = true
-SWEP.WorldModel = "models/weapons/c_Pistol.mdl"
+SWEP.WorldModel = "models/weapons/w_Pistol.mdl"
 SWEP.ViewModel = "models/weapons/c_Pistol.mdl"
 
 SWEP.Primary.Automatic = true
