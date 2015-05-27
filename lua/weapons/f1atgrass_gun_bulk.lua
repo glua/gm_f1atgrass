@@ -18,23 +18,23 @@ function SWEP:Initialize()
 end
 
 function SWEP:PrimaryAttack()
-	if not IsFirstTimePredicted() then return end
+	if IsFirstTimePredicted() then
+		if !self.Owner:KeyDown(IN_RELOAD) then self:EmitSound( "ambient/explosions/explode_1.wav" ) end
 
-	if !self.Owner:KeyDown(IN_RELOAD) then self:EmitSound( "ambient/explosions/explode_1.wav" ) end
+		if SERVER then
+			local b = self:GetBrushSize()
+			if self.Owner:KeyDown(IN_RELOAD) then
+				if b<1000 then self:SetBrushSize(b+5) end
+				return
+			end
 
-	if SERVER then
-		local b = self:GetBrushSize()
-		if self.Owner:KeyDown(IN_RELOAD) then
-			if b<1000 then self:SetBrushSize(b+5) end
-			return
-		end
-
-		local tr = self.Owner:GetEyeTrace()
-		if b>0 then
-			local off = Vector(b,b,b)
-			VOXL:setRegionAt(tr.HitPos+off,tr.HitPos-off,0)
-		else
-			VOXL:setSphereAt(tr.HitPos,math.abs(b),0)
+			local tr = self.Owner:GetEyeTrace()
+			if b>0 then
+				local off = Vector(b,b,b)
+				VOXL:setRegionAt(tr.HitPos+off,tr.HitPos-off,0)
+			else
+				VOXL:setSphereAt(tr.HitPos,math.abs(b),0)
+			end
 		end
 	end
 
@@ -42,23 +42,23 @@ function SWEP:PrimaryAttack()
 end
 
 function SWEP:SecondaryAttack()
-	if not IsFirstTimePredicted() then return end
+	if IsFirstTimePredicted() then
+		if !self.Owner:KeyDown(IN_RELOAD) then self:EmitSound( "npc/env_headcrabcanister/explosion.wav" ) end
 
-	if !self.Owner:KeyDown(IN_RELOAD) then self:EmitSound( "npc/env_headcrabcanister/explosion.wav" ) end
+		if SERVER then
+			local b = self:GetBrushSize()
+			if self.Owner:KeyDown(IN_RELOAD) then
+				if b>-1000 then self:SetBrushSize(b-5) end
+				return
+			end
 
-	if SERVER then
-		local b = self:GetBrushSize()
-		if self.Owner:KeyDown(IN_RELOAD) then
-			if b>-1000 then self:SetBrushSize(b-5) end
-			return
-		end
-
-		local tr = self.Owner:GetEyeTrace()
-		if b>0 then
-			local off = Vector(b,b,b)
-			VOXL:setRegionAt(tr.HitPos+off,tr.HitPos-off,self.Owner:GetInfoNum("voxl_brush_mat",5))
-		else
-			VOXL:setSphereAt(tr.HitPos,math.abs(b),self.Owner:GetInfoNum("voxl_brush_mat",5))
+			local tr = self.Owner:GetEyeTrace()
+			if b>0 then
+				local off = Vector(b,b,b)
+				VOXL:setRegionAt(tr.HitPos+off,tr.HitPos-off,self.Owner:GetInfoNum("voxl_brush_mat",5))
+			else
+				VOXL:setSphereAt(tr.HitPos,math.abs(b),self.Owner:GetInfoNum("voxl_brush_mat",5))
+			end
 		end
 	end
 
