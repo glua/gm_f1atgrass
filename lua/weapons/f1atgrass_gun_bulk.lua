@@ -24,7 +24,7 @@ function SWEP:PrimaryAttack()
 		if SERVER then
 			local b = self:GetBrushSize()
 			if self.Owner:KeyDown(IN_RELOAD) then
-				if b<1000 then self:SetBrushSize(b+5) end
+				if b<5000 then self:SetBrushSize(b+5) end
 				return
 			end
 
@@ -48,7 +48,7 @@ function SWEP:SecondaryAttack()
 		if SERVER then
 			local b = self:GetBrushSize()
 			if self.Owner:KeyDown(IN_RELOAD) then
-				if b>-1000 then self:SetBrushSize(b-5) end
+				if b>-5000 then self:SetBrushSize(b-5) end
 				return
 			end
 

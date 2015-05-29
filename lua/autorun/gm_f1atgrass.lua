@@ -14,10 +14,10 @@ if !VOXL then
 		VOXL = ents.Create("voxels")
 		VOXL.config = {dimensions=Vector(40,40,10), drawExterior = false, atlasMaterial="voxel_test_atlas", scale = 40, atlasWidth=8, atlasHeight=8, useMeshCollisions=true,
 			voxelTypes = {
-				[1]={atlasIndex=0},
-				[2]={atlasIndex=1},
-				[3]={atlasIndex=8},
-				[4]={atlasIndex=9},
+				[1]={atlasIndex=6,atlasIndex_zPos=9},
+				[2]={atlasIndex=7},
+				[3]={atlasIndex=7},
+				[4]={atlasIndex=7},
 				[5]={atlasIndex=3},
 				[6]={atlasIndex=4},
 				[7]={atlasIndex=5},
