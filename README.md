@@ -16,4 +16,4 @@ This is the testbed for gm_voxelate, a configurable voxel module for Garrysmod.
 See the wiki.
 
 ##Bugs
-Please report bugs with Voxelate on Voxelate's issues page: https://github.com/glua/gm_voxelate/issues
+Please report problems with Voxelate on Voxelate's issues page: https://github.com/glua/gm_voxelate/issues
