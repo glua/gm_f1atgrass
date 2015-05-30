@@ -87,10 +87,10 @@ hook.Add("VoxelateReady","voxl_setup",function()
 	file.CreateDir("voxl")
 
 	reset()
-	concommand.Add("voxl_reset",function(ply) if ply==nil then reset() end end)
+	concommand.Add("voxl_reset",function(ply) if !IsValid(ply) then reset() end end)
 
 	local function save(ply,cmd,args,argstr)
-		if ply!=nil then return end
+		if IsValid(ply) then return end
 		if VOXL:save("voxl/"..argstr..".txt") then
 			print("Saved!")
 		else
@@ -99,7 +99,7 @@ hook.Add("VoxelateReady","voxl_setup",function()
 	end
 
 	local function load(ply,cmd,args,argstr)
-		if ply!=nil then return end
+		if IsValid(ply) then return end
 		if VOXL:load("voxl/"..argstr..".txt") then
 			print("Loaded!")
 		else
@@ -124,11 +124,6 @@ if SERVER then
 			ply:SetJumpPower(250)
 		end)
 	end)
-
-
-
-	//VOXL:setSphere(40,40,40,30,6)
-	//VOXL:setRegion(32,32,20,16,16,70,5)
 else
 	hook.Add("Initialize","voxl_init",function()
 		CreateClientConVar("voxl_brush_mat",5, false, true)
