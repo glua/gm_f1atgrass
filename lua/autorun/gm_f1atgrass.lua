@@ -87,9 +87,10 @@ hook.Add("VoxelateReady","voxl_setup",function()
 	file.CreateDir("voxl")
 
 	reset()
-	concommand.Add("voxl_reset",reset,nil,nil, FCVAR_SERVER_CAN_EXECUTE)
+	concommand.Add("voxl_reset",function(ply) if ply==nil then reset() end end)
 
 	local function save(ply,cmd,args,argstr)
+		if ply!=nil then return end
 		if VOXL:save("voxl/"..argstr..".txt") then
 			print("Saved!")
 		else
@@ -98,6 +99,7 @@ hook.Add("VoxelateReady","voxl_setup",function()
 	end
 
 	local function load(ply,cmd,args,argstr)
+		if ply!=nil then return end
 		if VOXL:load("voxl/"..argstr..".txt") then
 			print("Loaded!")
 		else
@@ -105,8 +107,8 @@ hook.Add("VoxelateReady","voxl_setup",function()
 		end
 	end
 
-	concommand.Add("voxl_save",save,nil,nil, FCVAR_SERVER_CAN_EXECUTE)
-	concommand.Add("voxl_load",load,nil,nil, FCVAR_SERVER_CAN_EXECUTE)
+	concommand.Add("voxl_save",save)
+	concommand.Add("voxl_load",load)
 
 end)
 
