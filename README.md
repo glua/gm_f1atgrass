@@ -13,7 +13,7 @@ This is the testbed for gm_voxelate, a configurable voxel module for Garrysmod.
 
 ##Usage/Instructions
 
-See the wiki.
+See the [wiki](https://github.com/glua/gm_f1atgrass/wiki).
 
 ##Bugs
 Please report problems with Voxelate on Voxelate's issues page: https://github.com/glua/gm_voxelate/issues
