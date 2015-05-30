@@ -7,114 +7,113 @@ if SERVER then
 	resource.AddFile("materials/voxel_test_atlas.vmt")
 end
 
-if !VOXL then
-	require("voxelate")
 
-	if SERVER then
-		VOXL = ents.Create("voxels")
-		VOXL.config = {dimensions=Vector(40,40,10), drawExterior = false, atlasMaterial="voxel_test_atlas", scale = 40, atlasWidth=8, atlasHeight=8, useMeshCollisions=true,
-			voxelTypes = {
-				[1]={atlasIndex=6,atlasIndex_zPos=9},
-				[2]={atlasIndex=7},
-				[3]={atlasIndex=7},
-				[4]={atlasIndex=7},
-				[5]={atlasIndex=3},
-				[6]={atlasIndex=4},
-				[7]={atlasIndex=5},
-				[8]={atlasIndex=6},
-				[9]={atlasIndex=11},
-				[10]={atlasIndex=12},
-				[11]={atlasIndex=13},
-				[12]={atlasIndex=14},
-				[13]={atlasIndex=19},
-				[14]={atlasIndex=20},
-				[15]={atlasIndex=21},
-				[16]={atlasIndex=22},
-				[17]={atlasIndex=24},
-				[18]={atlasIndex=25},
-				[19]={atlasIndex=26},
-				[20]={atlasIndex=27},
-				[21]={atlasIndex=28},
-				[22]={atlasIndex=29},
-				[23]={atlasIndex=30},
-				[24]={atlasIndex=31},
-				[25]={atlasIndex=32},
-				[26]={atlasIndex=33},
-				[27]={atlasIndex=34},
-				[28]={atlasIndex=35},
-				[29]={atlasIndex=36},
-				[30]={atlasIndex=37},
-				[31]={atlasIndex=38},
-				[32]={atlasIndex=39},
-				[33]={atlasIndex=40},
-				[34]={atlasIndex=41},
-				[35]={atlasIndex=42},
-				[36]={atlasIndex=43},
-				[37]={atlasIndex=44},
-				[38]={atlasIndex=45}
-			}
+require("voxelate")
+
+hook.Add("VoxelateReady","voxl_setup",function()
+
+	VOXL = ents.Create("voxels")
+	VOXL.config = {dimensions=Vector(40,40,20), drawExterior = false, atlasMaterial="voxel_test_atlas", scale = 40, atlasWidth=8, atlasHeight=8, useMeshCollisions=true,
+		voxelTypes = {
+			[1]={atlasIndex=6,atlasIndex_zPos=9},
+			[2]={atlasIndex=7},
+			[3]={atlasIndex=7},
+			[4]={atlasIndex=7},
+			[5]={atlasIndex=3},
+			[6]={atlasIndex=4},
+			[7]={atlasIndex=5},
+			[8]={atlasIndex=6},
+			[9]={atlasIndex=11},
+			[10]={atlasIndex=12},
+			[11]={atlasIndex=13},
+			[12]={atlasIndex=14},
+			[13]={atlasIndex=19},
+			[14]={atlasIndex=20},
+			[15]={atlasIndex=21},
+			[16]={atlasIndex=22},
+			[17]={atlasIndex=24},
+			[18]={atlasIndex=25},
+			[19]={atlasIndex=26},
+			[20]={atlasIndex=27},
+			[21]={atlasIndex=28},
+			[22]={atlasIndex=29},
+			[23]={atlasIndex=30},
+			[24]={atlasIndex=31},
+			[25]={atlasIndex=32},
+			[26]={atlasIndex=33},
+			[27]={atlasIndex=34},
+			[28]={atlasIndex=35},
+			[29]={atlasIndex=36},
+			[30]={atlasIndex=37},
+			[31]={atlasIndex=38},
+			[32]={atlasIndex=39},
+			[33]={atlasIndex=40},
+			[34]={atlasIndex=41},
+			[35]={atlasIndex=42},
+			[36]={atlasIndex=43},
+			[37]={atlasIndex=44},
+			[38]={atlasIndex=45}
 		}
-		VOXL:SetPos(Vector(-12800,-12800,0))
-		VOXL:Spawn()
-		
-		local function reset()
-			VOXL:generate(function(x, y, z)
-				//local sign = function(n) if n>0 then return 1 elseif n<0 then return -1 else return 0 end end
-				//x=x-316
-				//y=y-316
-				//z=z+(sign(x*y) * sign(1-(x*9)^2+(y*9)^2)/9)*20
+	}
+	VOXL:SetPos(Vector(-12800,-12800,0))
+	VOXL:Spawn()
+	
+	local function reset()
+		VOXL:generate(function(x, y, z)
+			//local sign = function(n) if n>0 then return 1 elseif n<0 then return -1 else return 0 end end
+			//x=x-316
+			//y=y-316
+			//z=z+(sign(x*y) * sign(1-(x*9)^2+(y*9)^2)/9)*20
 
-				z=math.floor(z+math.sin((x+30)/32)*8+math.cos((y-20)/32)*8)
-				if (z < 40) then
-					return 7
-				elseif (z < 49) then
-					return 8
-				elseif (z < 50) then
-					return 1
-				elseif (z == 50) then
-					if (x > 315 && x<325 && y>316 && y<324) then
-						if (x>316 && x < 324 && y>317 && y < 323) then
-							return 6
-						end
-						return 5
+			z=z-50+math.floor(math.sin((x+30)/32)*8+math.cos((y-20)/32)*8)
+			if (z < 40) then
+				return 7
+			elseif (z < 49) then
+				return 8
+			elseif (z < 50) then
+				return 1
+			elseif (z == 50) then
+				if (x > 315 && x<325 && y>316 && y<324) then
+					if (x>316 && x < 324 && y>317 && y < 323) then
+						return 6
 					end
+					return 5
 				end
-				return 0
-			end)
-		end
-
-		file.CreateDir("voxl")
-
-		reset()
-		concommand.Add("voxl_reset",reset,nil,nil, FCVAR_SERVER_CAN_EXECUTE)
-
-		local function save(ply,cmd,args,argstr)
-			if VOXL:save("voxl/"..argstr..".txt") then
-				print("Saved!")
-			else
-				print("Save failed!")
 			end
-		end
-
-		local function load(ply,cmd,args,argstr)
-			if VOXL:load("voxl/"..argstr..".txt") then
-				print("Loaded!")
-			else
-				print("Load failed!")
-			end
-		end
-
-		concommand.Add("voxl_save",save,nil,nil, FCVAR_SERVER_CAN_EXECUTE)
-		concommand.Add("voxl_load",load,nil,nil, FCVAR_SERVER_CAN_EXECUTE)
-	else
-		VOXL=true
+			return 0
+		end)
 	end
-end
+
+	file.CreateDir("voxl")
+
+	reset()
+	concommand.Add("voxl_reset",reset,nil,nil, FCVAR_SERVER_CAN_EXECUTE)
+
+	local function save(ply,cmd,args,argstr)
+		if VOXL:save("voxl/"..argstr..".txt") then
+			print("Saved!")
+		else
+			print("Save failed!")
+		end
+	end
+
+	local function load(ply,cmd,args,argstr)
+		if VOXL:load("voxl/"..argstr..".txt") then
+			print("Loaded!")
+		else
+			print("Load failed!")
+		end
+	end
+
+	concommand.Add("voxl_save",save,nil,nil, FCVAR_SERVER_CAN_EXECUTE)
+	concommand.Add("voxl_load",load,nil,nil, FCVAR_SERVER_CAN_EXECUTE)
+
+end)
 
 if SERVER then
 
 	hook.Add("PlayerSpawn","voxl_playerspawn",function(ply)
-		ply:SetPos(Vector(math.random(-190,190),math.random(-120,120),2744))
+		ply:SetPos(Vector(math.random(-190,190),math.random(-120,120),6044))
 		ply:Give("f1atgrass_gun")
 		ply:Give("f1atgrass_gun_bulk")
 		ply:Give("f1atgrass_gun_adv")
