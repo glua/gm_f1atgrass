@@ -13,7 +13,7 @@ require("voxelate")
 hook.Add("VoxelateReady","voxl_setup",function()
 
 	VOXL = ents.Create("voxels")
-	VOXL.config = {dimensions=Vector(40,40,20), drawExterior = false, atlasMaterial="voxel_test_atlas", scale = 40, atlasWidth=8, atlasHeight=8, useMeshCollisions=true,
+	VOXL.config = {dimensions=Vector(640,640,320), drawExterior = false, atlasMaterial="voxel_test_atlas", scale = 40, atlasWidth=8, atlasHeight=8, atlasIsPadded=true, useMeshCollisions=true,
 		voxelTypes = {
 			[1]={atlasIndex=6,atlasIndex_zPos=9},
 			[2]={atlasIndex=7},
