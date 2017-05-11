@@ -10,9 +10,10 @@ end
 
 require("voxelate")
 
-hook.Add("VoxelateReady","voxl_setup",function()
+hook.Add("InitPostEntity","voxl_setup",function()
+	if CLIENT then return end
 
-	VOXL = ents.Create("voxels")
+	VOXL = ents.Create("voxel_world")
 	VOXL.config = {dimensions=Vector(640,640,320), drawExterior = false, atlasMaterial="voxel_test_atlas", scale = 40, atlasWidth=8, atlasHeight=8, atlasIsPadded=true, useMeshCollisions=true,
 		voxelTypes = {
 			[1]={atlasIndex=6,atlasIndex_zPos=9},
