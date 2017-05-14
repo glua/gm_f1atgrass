@@ -131,6 +131,7 @@ else
 		local combo = g_ContextMenu:Add("DComboBox")
 		combo:SetPos(20,130)
 		combo:SetWide(200)
+		combo:SetSortItems(false)
 
 		combo:AddChoice("01 - Grass"			,1)
 		combo:AddChoice("05 - Concrete"			,5,true)
