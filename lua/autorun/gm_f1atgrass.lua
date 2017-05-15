@@ -10,10 +10,12 @@ end
 
 require("voxelate")
 
-hook.Add("VoxelateReady","voxl_setup",function()
+hook.Add("InitPostEntity","voxl_setup",function()
+	if CLIENT then return end
 
-	VOXL = ents.Create("voxels")
-	VOXL.config = {dimensions=Vector(40,40,20), drawExterior = false, atlasMaterial="voxel_test_atlas", scale = 40, atlasWidth=8, atlasHeight=8, useMeshCollisions=true,
+	VOXL = ents.Create("voxel_world") -- 640
+	VOXL.config = {
+		dimensions=Vector(640,640,320), scale = 40, atlasMaterial="voxel_test_atlas", atlasWidth=8, atlasHeight=8, atlasIsPadded=true, buildPhysicsMesh=true,
 		voxelTypes = {
 			[1]={atlasIndex=6,atlasIndex_zPos=9},
 			[2]={atlasIndex=7},
@@ -58,7 +60,8 @@ hook.Add("VoxelateReady","voxl_setup",function()
 	VOXL:SetPos(Vector(-12800,-12800,0))
 	VOXL:Spawn()
 	
-	local function reset()
+	-- DO NOT GENERATE THE WORLD THIS WAY! USE config.generator
+	--[[local function reset()
 		VOXL:generate(function(x, y, z)
 			//local sign = function(n) if n>0 then return 1 elseif n<0 then return -1 else return 0 end end
 			//x=x-316
@@ -86,8 +89,8 @@ hook.Add("VoxelateReady","voxl_setup",function()
 
 	file.CreateDir("voxl")
 
-	reset()
-	concommand.Add("voxl_reset",function(ply) if !IsValid(ply) then reset() end end)
+	reset()]]
+	--concommand.Add("voxl_reset",function(ply) if !IsValid(ply) then reset() end end)
 
 	local function save(ply,cmd,args,argstr)
 		if IsValid(ply) then return end
