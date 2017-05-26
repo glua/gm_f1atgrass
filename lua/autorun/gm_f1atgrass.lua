@@ -13,11 +13,11 @@ require("voxelate")
 hook.Add("InitPostEntity","voxl_setup",function()
 	if CLIENT then return end
 
-	VOXL = ents.Create("voxel_world") -- 640
+	VOXL = ents.Create("voxel_world") -- 640, buildExterior
 	VOXL.config = {
-		dimensions=Vector(640,640,320), scale = 40, atlasMaterial="voxel_test_atlas", atlasWidth=8, atlasHeight=8, atlasIsPadded=true, buildPhysicsMesh=true,
+		dimensions=Vector(640,640,320), scale = 40, atlasMaterial="voxel_test_atlas", atlasWidth=8, atlasHeight=8, buildPhysicsMesh=true,
 		voxelTypes = {
-			[1]={atlasIndex=6,atlasIndex_zPos=9},
+			[1]={atlasIndex=6,atlasIndex_zPos=18},
 			[2]={atlasIndex=7},
 			[3]={atlasIndex=7},
 			[4]={atlasIndex=7},
