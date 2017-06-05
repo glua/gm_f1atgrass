@@ -1,0 +1,6 @@
+"Voxels"
+{
+	$basetexture voxbox128
+	$atlas_w 8
+	$atlas_h 8
+}

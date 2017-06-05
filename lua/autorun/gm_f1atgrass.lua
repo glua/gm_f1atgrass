@@ -4,7 +4,7 @@ if game.GetMap()!="gm_f1atgrass" then return end
 
 if SERVER then
 	AddCSLuaFile()
-	resource.AddFile("materials/voxel_test_atlas.vmt")
+	resource.AddFile("materials/voxbox128.vmt")
 end
 
 
@@ -15,9 +15,9 @@ hook.Add("InitPostEntity","voxl_setup",function()
 
 	VOXL = ents.Create("voxel_world") -- 640, buildExterior
 	VOXL.config = {
-		dimensions=Vector(640,640,320), scale = 40, atlasMaterial="voxel_test_atlas", atlasWidth=8, atlasHeight=8, buildPhysicsMesh=true,
+		dimensions=Vector(640,640,320), scale = 40, atlasMaterial="voxbox128", atlasWidth=8, atlasHeight=8, buildPhysicsMesh=true,
 		voxelTypes = {
-			[1]={atlasIndex=6,atlasIndex_zPos=18},
+			[1]={atlasIndex=6,atlasIndex_zPos=0},
 			[2]={atlasIndex=7},
 			[3]={atlasIndex=7},
 			[4]={atlasIndex=7},
