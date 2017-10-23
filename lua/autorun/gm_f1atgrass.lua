@@ -1,12 +1,9 @@
-if false then return end
-
-if game.GetMap()!="gm_f1atgrass" then return end
+if game.GetMap() ~= "gm_f1atgrass" then return end
 
 if SERVER then
 	AddCSLuaFile()
 	resource.AddFile("materials/voxbox128.vmt")
 end
-
 
 require("voxelate")
 
@@ -14,109 +11,60 @@ hook.Add("InitPostEntity","voxl_setup",function()
 	if CLIENT then return end
 
 	VOXL = ents.Create("voxel_world") -- 640, buildExterior
+
 	VOXL.config = {
-		dimensions=Vector(640,640,320), scale = 40, atlasMaterial="voxbox128", atlasWidth=8, atlasHeight=8, buildPhysicsMesh=true,
+		dimensions = Vector(640,640,320),
+		scale = 40,
+		atlasMaterial = "voxbox128",
+		atlasWidth = 8,
+		atlasHeight = 8,
+		buildPhysicsMesh = true,
 		voxelTypes = {
-			[1]={atlasIndex=6,atlasIndex_zPos=0},
-			[2]={atlasIndex=7},
-			[3]={atlasIndex=7},
-			[4]={atlasIndex=7},
-			[5]={atlasIndex=3},
-			[6]={atlasIndex=4},
-			[7]={atlasIndex=5},
-			[8]={atlasIndex=6},
-			[9]={atlasIndex=11},
-			[10]={atlasIndex=12},
-			[11]={atlasIndex=13},
-			[12]={atlasIndex=14},
-			[13]={atlasIndex=19},
-			[14]={atlasIndex=20},
-			[15]={atlasIndex=21},
-			[16]={atlasIndex=22},
-			[17]={atlasIndex=24},
-			[18]={atlasIndex=25},
-			[19]={atlasIndex=26},
-			[20]={atlasIndex=27},
-			[21]={atlasIndex=28},
-			[22]={atlasIndex=29},
-			[23]={atlasIndex=30},
-			[24]={atlasIndex=31},
-			[25]={atlasIndex=32},
-			[26]={atlasIndex=33},
-			[27]={atlasIndex=34},
-			[28]={atlasIndex=35},
-			[29]={atlasIndex=36},
-			[30]={atlasIndex=37},
-			[31]={atlasIndex=38},
-			[32]={atlasIndex=39},
-			[33]={atlasIndex=40},
-			[34]={atlasIndex=41},
-			[35]={atlasIndex=42},
-			[36]={atlasIndex=43},
-			[37]={atlasIndex=44},
-			[38]={atlasIndex=45}
+			[1] = {atlasIndex = 6,atlasIndex_zPos = 0},
+			[2] = {atlasIndex = 7},
+			[3] = {atlasIndex = 7},
+			[4] = {atlasIndex = 7},
+			[5] = {atlasIndex = 3},
+			[6] = {atlasIndex = 4},
+			[7] = {atlasIndex = 5},
+			[8] = {atlasIndex = 6},
+			[9] = {atlasIndex = 11},
+			[10] = {atlasIndex = 12},
+			[11] = {atlasIndex = 13},
+			[12] = {atlasIndex = 14},
+			[13] = {atlasIndex = 19},
+			[14] = {atlasIndex = 20},
+			[15] = {atlasIndex = 21},
+			[16] = {atlasIndex = 22},
+			[17] = {atlasIndex = 24},
+			[18] = {atlasIndex = 25},
+			[19] = {atlasIndex = 26},
+			[20] = {atlasIndex = 27},
+			[21] = {atlasIndex = 28},
+			[22] = {atlasIndex = 29},
+			[23] = {atlasIndex = 30},
+			[24] = {atlasIndex = 31},
+			[25] = {atlasIndex = 32},
+			[26] = {atlasIndex = 33},
+			[27] = {atlasIndex = 34},
+			[28] = {atlasIndex = 35},
+			[29] = {atlasIndex = 36},
+			[30] = {atlasIndex = 37},
+			[31] = {atlasIndex = 38},
+			[32] = {atlasIndex = 39},
+			[33] = {atlasIndex = 40},
+			[34] = {atlasIndex = 41},
+			[35] = {atlasIndex = 42},
+			[36] = {atlasIndex = 43},
+			[37] = {atlasIndex = 44},
+			[38] = {atlasIndex = 45}
 		}
 	}
 	VOXL:SetPos(Vector(-12800,-12800,0))
 	VOXL:Spawn()
-	
-	-- DO NOT GENERATE THE WORLD THIS WAY! USE config.generator
-	--[[local function reset()
-		VOXL:generate(function(x, y, z)
-			//local sign = function(n) if n>0 then return 1 elseif n<0 then return -1 else return 0 end end
-			//x=x-316
-			//y=y-316
-			//z=z+(sign(x*y) * sign(1-(x*9)^2+(y*9)^2)/9)*20
-
-			z=z-50+math.floor(math.sin((x+30)/32)*8+math.cos((y-20)/32)*8)
-			if (z < 40) then
-				return 7
-			elseif (z < 49) then
-				return 8
-			elseif (z < 50) then
-				return 1
-			elseif (z == 50) then
-				if (x > 315 && x<325 && y>316 && y<324) then
-					if (x>316 && x < 324 && y>317 && y < 323) then
-						return 6
-					end
-					return 5
-				end
-			end
-			return 0
-		end)
-	end
-
-	file.CreateDir("voxl")
-
-	reset()]]
-	--concommand.Add("voxl_reset",function(ply) if !IsValid(ply) then reset() end end)
-
-	local function save(ply,cmd,args,argstr)
-		if IsValid(ply) then return end
-		if VOXL:save("voxl/"..argstr..".txt") then
-			print("Saved!")
-		else
-			print("Save failed!")
-		end
-	end
-
-	local function load(ply,cmd,args,argstr)
-		if IsValid(ply) then return end
-		if VOXL:load("voxl/"..argstr..".txt") then
-			print("Loaded!")
-		else
-			print("Load failed!")
-		end
-	end
-
-	concommand.Add("voxl_save",save)
-	concommand.Add("voxl_load",load)
-
 end)
 
 if SERVER then
-
 	hook.Add("PlayerSpawn","voxl_playerspawn",function(ply)
 		ply:SetPos(Vector(math.random(-190,190),math.random(-120,120),6044))
 		ply:Give("f1atgrass_gun")
@@ -129,7 +77,7 @@ if SERVER then
 	end)
 else
 	hook.Add("Initialize","voxl_init",function()
-		CreateClientConVar("voxl_brush_mat",5, false, true)
+		CreateClientConVar("voxl_brush_mat",5,false,true)
 
 		local combo = g_ContextMenu:Add("DComboBox")
 		combo:SetPos(20,130)
