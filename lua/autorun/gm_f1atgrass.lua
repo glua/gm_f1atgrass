@@ -60,13 +60,14 @@ hook.Add("InitPostEntity","voxl_setup",function()
 		}
 	}
 	-- VOXL:SetPos(Vector(-12800,-12800,0))
-	VOXL:SetPos(Vector(0,0,0))
+	-- map is -12800 -> 12800, -12800 -> 12800, 0 -> 15424
+	VOXL:SetPos(Vector(0,0,15424 / 2))
 	VOXL:Spawn()
 end)
 
 if SERVER then
 	hook.Add("PlayerSpawn","voxl_playerspawn",function(ply)
-		ply:SetPos(Vector(math.random(-190,190),math.random(-120,120),6044))
+		ply:SetPos(Vector(math.random(-190,190),math.random(-120,120),15424 / 2 + 20))
 		ply:Give("f1atgrass_gun")
 		ply:Give("f1atgrass_gun_bulk")
 		ply:Give("f1atgrass_gun_adv")
