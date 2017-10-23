@@ -59,7 +59,8 @@ hook.Add("InitPostEntity","voxl_setup",function()
 			[38] = {atlasIndex = 45}
 		}
 	}
-	VOXL:SetPos(Vector(-12800,-12800,0))
+	-- VOXL:SetPos(Vector(-12800,-12800,0))
+	VOXL:SetPos(Vector(0,0,0))
 	VOXL:Spawn()
 end)
 
