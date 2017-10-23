@@ -13,7 +13,6 @@ hook.Add("InitPostEntity","voxl_setup",function()
 	VOXL = ents.Create("voxel_world") -- 640, buildExterior
 
 	VOXL.config = {
-		dimensions = Vector(640,640,320),
 		scale = 40,
 		atlasMaterial = "voxbox128",
 		atlasWidth = 8,
